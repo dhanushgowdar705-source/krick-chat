@@ -8,7 +8,8 @@ app.config['SECRET_KEY'] = 'secret!'
 app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 socketio = SocketIO(app, max_http_buffer_size=10_000_000, async_mode='eventlet', cors_allowed_origins="*")
-rooms_users = {}online_users = {}
+rooms_users = {}
+online_users = {}
 
 @app.route('/')
 def index():
