@@ -28,8 +28,8 @@ def upload_file():
 
 @socketio.on('register')
 def handle_register(data):
-    online_users[request.sid] = data['username']
-    emit('online_users', list(set(online_users.values())), broadcast=True)
+    online_users[request.sid] = {'name': data['username'], 'phone': data['phone']}
+    emit('online_users', list(online_users.values()), broadcast=True)
 
 @socketio.on('join')
 def handle_join(data):
@@ -64,7 +64,7 @@ def handle_seen(data):
 def handle_disconnect():
     if request.sid in online_users:
         del online_users[request.sid]
-        emit('online_users', list(set(online_users.values())), broadcast=True)
+        emit('online_users', list(online_users.values()), broadcast=True)
     for room, users in rooms_users.items():
         if request.sid in users:
             username = users.pop(request.sid)
